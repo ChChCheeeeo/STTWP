@@ -98,5 +98,29 @@ class HomePageTests(unittest.TestCase):
         # check page title
         self.assertEqual("VIP", self.driver.title)
 
+    def test_shopping_cart_status(self):
+        # check My Shopping Cart home page content
+        # click and open Shpping Cart icon
+        # in Shopping Cart section
+        # here using class name and element tag name
+        # see cart in firebug
+        shopping_cart_icon = self.driver.find_element_by_css_selector(
+            "div.header-minicart span.icon"
+        )
+
+        # get shopping cart status
+        shopping_car_status = self.driver.find_element_by_css_selector(
+            "p.empty"
+        ).text
+        self.assertEqual("You have no items in your shopping cart.",
+            shopping_car_status
+        )
+
+        # close shopping cart section
+        close_button = self.driver.find_element_by_css_selector(
+            "div.minicart-wrapper a.close"
+        )
+        close_button.click()
+
 if __name__=='__main__':
     unittest.main(verbosity=2)
