@@ -4,7 +4,7 @@ from selenium import webdriver
 
 import unittest
 
-class SearchTest(unittest.TestCase):
+class SearchTests(unittest.TestCase):
     """SearchTest
         Test searchproducts
     """

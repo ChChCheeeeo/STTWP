@@ -6,7 +6,7 @@ from selenium import webdriver
 
 import unittest
 
-class HomePageTest(unittest.TestCase):
+class HomePageTests(unittest.TestCase):
     """HomePageTest
     """
     @classmethod
