@@ -34,7 +34,7 @@ class HomePageTests(unittest.TestCase):
 
     def test_search_field(self):
         # check Home page search field exits
-        self.assertTrue(self.is_element_present(By.NAME,"q"))
+        self.assertTrue(self.is_element_present(By.NAME, "q"))
 
     def test_langauge_option(self):
         # check home page language drop down options
@@ -107,6 +107,7 @@ class HomePageTests(unittest.TestCase):
         shopping_cart_icon = self.driver.find_element_by_css_selector(
             "div.header-minicart span.icon"
         )
+        shopping_cart_icon.click()
 
         # get shopping cart status
         shopping_car_status = self.driver.find_element_by_css_selector(
@@ -121,6 +122,20 @@ class HomePageTests(unittest.TestCase):
             "div.minicart-wrapper a.close"
         )
         close_button.click()
+
+    def test_my_account_link_is_displayed(self):
+        # get account link
+        account_link = self.driver.find_element_by_link_text("ACCOUNT")
+
+        # check Home page footer displays My Account link
+        self.assertTrue(account_link.is_displayed())
+
+    def test_account_links(self):
+        # get all links containing 'Account' as text
+        account_links = self.driver.find_elements_by_partial_link_text("ACCOUNT")
+
+        # check Home page footer displays Account and My Account link
+        self.assertTrue(2, len(account_links))
 
 if __name__=='__main__':
     unittest.main(verbosity=2)
