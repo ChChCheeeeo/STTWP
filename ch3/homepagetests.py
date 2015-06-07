@@ -60,5 +60,43 @@ class HomePageTests(unittest.TestCase):
         )
         close_button.click()
 
+    def test_search_text_field_max_length(self):
+        # get search textbox
+        search_field = self.driver.find_element_by_id("search")
+
+        # check maxlength attribute set to 128
+        self.assertEqual("128", search_field.get_attribute("maxlength"))
+
+    def test_search_button_enabled(self):
+        # get search button
+        search_button = self.driver.find_element_by_class_name("button")
+
+        # check search button enabled
+        self.assertTrue(search_button.is_enabled())
+
+    def test_count_of_promo_banners_images(self):
+        # get promo banner list
+        banner_list = self.driver.find_element_by_class_name("promos")
+
+        # get images from banner list
+        banners = banner_list.find_elements_by_tag_name("img")
+
+        # check there are 3 tags displayed
+        self.assertEqual(3, len(banners))
+
+    def test_vip_promo(self):
+        # test vip promo image
+        xpath = "//img[@alt='Shop Private Sales - Members Only']"
+        vip_promo = self.driver.find_element_by_xpath(xpath)
+
+        # check home pages displays vip promo logo
+        self.assertTrue(vip_promo.is_displayed())
+
+        # click on vip promo to open page
+        vip_promo.click()
+
+        # check page title
+        self.assertEqual("VIP", self.driver.title)
+
 if __name__=='__main__':
     unittest.main(verbosity=2)
