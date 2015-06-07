@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from time import gmtime, strftime
 from selenium import webdriver
 import unittest
 
@@ -22,6 +23,7 @@ class RegisterNewUser(unittest.TestCase):
     def test_register_new_user(self):
         # open and click on 'Log In'
         driver = self.driver
+        
         account_link = self.driver.find_element_by_link_text("ACCOUNT")
         # some reason "Log In" shows up in firebug but need to
         # click on account first
@@ -56,7 +58,7 @@ class RegisterNewUser(unittest.TestCase):
         news_letter_subscription = driver.find_element_by_id(
             "is_subscribed"
         )
-        
+
         pw = driver.find_element_by_id("password")
         confirm_pw = driver.find_element_by_id("confirmation")
 
@@ -87,6 +89,37 @@ class RegisterNewUser(unittest.TestCase):
 
         # check radio button 'Sign Up for Newsletter' is unchecked
         self.assertFalse(news_letter_subscription.is_selected())
+
+        # make users unique
+        user_name = "senor_" + strftime("%Y%m%d%H%M%S", gmtime())
+
+        # fill out all fields
+        first_name.send_keys("Hola")
+        last_name.send_keys(user_name)
+
+        email_addr.send_keys(user_name + "@senor.com")
+        news_letter_subscription.click()
+
+        # more than 6 characters
+        pw.send_keys("tamales")
+        confirm_pw.send_keys("tamales")
+
+        submit_button.click()
+
+        # registration successful?
+        self.assertEqual(
+            "Hello, Hola " + user_name + "!",
+            driver.find_element_by_css_selector(
+                "p.hello > strong"
+            ).text
+        )
+
+        driver.find_element_by_link_text("ACCOUNT").click()
+        self.assertTrue(
+            driver.find_element_by_link_text(
+                "Log Out").is_displayed()
+        )
+
 
 if __name__=='__main__':
     unittest.main(verbosity=2)
