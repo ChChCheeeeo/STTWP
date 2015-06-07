@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
 from selenium import webdriver
 
 import unittest
@@ -9,38 +7,19 @@ import unittest
 class HomePageTests(unittest.TestCase):
     """HomePageTest
     """
+
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Firefox()
         cls.driver.implicitly_wait(30)
         cls.driver.maximize_window()
+
         # home page
         cls.driver.get("http://demo.magentocommerce.com/")
 
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-
-    def is_element_present(self, how, what):
-        """Utility method checks precence of element on page
-        :params how: By locator type
-        :params what: locator value
-        """
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException:
-            return False
-        return True
-
-    def test_search_field(self):
-        # check Home page search field exits
-        self.assertTrue(self.is_element_present(By.NAME, "q"))
-
-    def test_langauge_option(self):
-        # check home page language drop down options
-        self.assertTrue(self.is_element_present(
-            By.ID, "select-language"
-        ))
 
     def test_shopping_cart_empty_message(self):
         # check content
