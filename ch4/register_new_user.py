@@ -64,6 +64,29 @@ class RegisterNewUser(unittest.TestCase):
             "//button[@title='Register']"
         )
 
+        # check maxlength first name and last name text box
+        self.assertEqual(
+            "255",
+            first_name.get_attribute("maxlength")
+        )
+        self.assertEqual(
+            "255",
+            last_name.get_attribute("maxlength")
+        )
+
+        # check all fields enabled
+        self.assertTrue(
+            first_name.is_enabled() and
+            last_name.is_enabled() and
+            email_addr.is_enabled and
+            news_letter_subscription.is_enabled() and
+            pw.is_enabled() and
+            confirm_pw.is_enabled() and
+            submit_button.is_enabled()
+        )
+
+        # check radio button 'Sign Up for Newsletter' is unchecked
+        self.assertFalse(news_letter_subscription.is_selected())
 
 if __name__=='__main__':
     unittest.main(verbosity=2)
