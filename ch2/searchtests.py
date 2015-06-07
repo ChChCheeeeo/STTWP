@@ -9,22 +9,22 @@ class SearchTest(unittest.TestCase):
         Test searchproducts
     """
 
-    def setUp(self):
-        #  to perform tasks at the start of each test or all the
-        # tests that will be defined in the class.
-        # create new FireFox session
-        # runs before each test method to have consistent state
-        # between tests
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(15)
-        self.driver.maximize_window()
+    @classmethod
+    def setUpClass(cls):
+        # share values between the test methods using the setUpClass() 
+        # and tearDownClass() methods and using the @classmethod 
+        # decorator.
+        cls.driver = webdriver.Firefox()
+        cls.driver.implicitly_wait(30)
+        cls.driver.maximize_window()
 
         # navigate to demo home page
-        self.driver.get("http://demo.magentocommerce.com/")
+        cls.driver.get("http://demo.magentocommerce.com/")
+        cls.driver.title
 
-    def tearDown(self):
-        # clean up any initialized values after the test is executed.
-        self.driver.quit()
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
     def test_search_by_category(self):
         # get search textbox
