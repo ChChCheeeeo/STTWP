@@ -21,6 +21,23 @@ class ExplicitWaitTests(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
+    # def testLoginLink(self):
+    #     # custom wait condition
+    #     # wait 10 seconds utnil 'Select Langauge' dropbown menu
+    #     # has eigth options. Good for when needing to wait until
+    #     # all options become available to be selected
+    #     WebDriverWait(self.driver, 10).until(
+    #         lambda s: s.find_element_by_id(
+    #             "select-language"
+    #         ).get_attribute("length") == "8"
+    #     )
+    #     login_link = WebDriverWait(self.driver, 10).until(
+    #         expected_conditions.visibility_of_element_located(
+    #             (By.LINK_TEXT, "Log In")
+    #         )
+    #     )
+    #     login_link.click()
+
     def test_account_link(self):
         # use explicit wait until "Log In" link is visible
         # in DOM, using expected visibility_of_element_located
