@@ -42,6 +42,37 @@ class ExplicitWaitTests(unittest.TestCase):
         )
         account.click()
 
+    def test_create_new_customer(self):
+        # wait for 'Create an Account' to be clickable. click it
+        # and wait for next page
+
+        self.driver.find_element_by_link_text("ACCOUNT").click()
+
+        # wait for 'My Account' link in menu
+        my_account = WebDriverWait(self.driver, 10).until(
+            expected_conditions.visibility_of_element_located(
+                (By.LINK_TEXT, "My Account")
+            )
+        )
+        my_account.click()
+
+        # get 'Create Account' button
+        # wait for element to be enabled
+        create_account_button = WebDriverWait(self.driver, 10).until(
+            expected_conditions.element_to_be_clickable(
+                (By.LINK_TEXT, "CREATE AN ACCOUNT")
+            )
+        )
+
+        # display new account
+        create_account_button.click()
+
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.title_contains(
+                "Create New Customer Account"
+            )
+        )
+
 if __name__=='__main__':
     # display amount of test results in console
     unittest.main(verbosity=2)
