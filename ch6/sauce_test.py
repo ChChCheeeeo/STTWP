@@ -1,28 +1,31 @@
 # -*- coding: utf-8 -*-
+from keys import get_info
 from selenium import webdriver
 import unittest
+import sys
 
-# connect Selenium server and request it to set up a
-# firefox browser running on Windows
-# test shows interactin between test and server
-# can also go to http://<remote-machine-ip>:4444/wd/hub/static/
-# resource/hub.html, which displays a new session being created. If you hover over
-# the capabilities link, it displays the capabilities being used to run the tests
+
+# sauce test for running on the cloud
 
 class SearchProducts(unittest.TestCase):
     """SearchProducts
     """
 
+    PLATFORM = 'WINDOWS'
+    BROWSER = 'firefox'
+    SAUCE_USERNAME, SAUCE_KEY = get_info()
+
     def setUp(self):
         desired_caps = {}
-        desired_caps['platform'] = 'WINDOWS'
-        desired_caps['browserName'] = 'firefox'
+        desired_caps['platform'] = self.PLATFORM
+        desired_caps['browserName'] = self.BROWSER
+
+        sauce_string = self.SAUCE_USERNAME + ":" + self.SAUCE_KEY
 
         self.driver = webdriver.Remote(
-            'http://192.168.1.102:4444/wd/hub/',
+            'http://' + sauce_string + '@ondemand.saucelabs.com:80/wd/hub',
             desired_caps
         )
-
         self.desired_caps.get(
             'http://demo.magentocommerce.com/'
         )
@@ -48,5 +51,8 @@ class SearchProducts(unittest.TestCase):
         # check products count
         self.assertEqual(2, len(products))
 
-if __name__=='__main__':
-    unittest.main()
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        SearchProducts.BROWSER = sys.argv.pop()
+        SearchProducts.PLATFORM = sys.argv.pop()
+    unittest.main(verbosity=2)
