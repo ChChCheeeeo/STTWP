@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+from base import InvalidPageException
+from base import BasePage
+
+
+class ProductPage(BasePage):
+    """ProductPage
+        Has some attributes related to product.
+    """
+
+    _product_view_locator = 'div.product-view'
+    _product_name_locator = 'div.product-name span'
+    _product_description_locator = 'div.tab-content div.std'
+    _product_stock_status_locator = 'p.availablity span.value'
+    _product_price_locator = 'span.price'
+
+    def __init__(self, driver):
+        super(ProductPage, self).__init__(driver)
+    @property
+    def name(self):
+        return self.driver.find_element_by_css_locator(
+            self._product_name_locator
+        ).text.strip()
+
+    @property
+    def description(self):
+        return self.driver.find_element_by_css_locator(
+            self._product_description_locator
+        ).text.strip()
+
+    @property
+    def price(self):
+        return self.driver.find_element_by_css_locator(
+            self._product_price_locator
+        ).text.strip()
+
+    def _validate_page(self, driver):
+        try:
+            driver.find_element_by_css_locator(
+                self._product_view_locator
+            )
+        except:
+            raise InvalidPageException(
+                'Product page not loaded'
+            )
