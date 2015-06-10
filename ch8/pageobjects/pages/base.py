@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from abc import abstractmethod
 
+from abc import abstractmethod
 # BasePage object acts as a parent object for all the page objects 
 # created in test suite. it provides common code that the page object 
 # can use.
@@ -10,7 +10,7 @@ class BasePage(object):
         All page objects inherit from this.
     """
 
-    def __int__(self, driver):
+    def __init__(self, driver):
         self._validate_page(driver)
         self.driver = driver
 
@@ -21,19 +21,18 @@ class BasePage(object):
         # before test can use attributes or actions.
         return
 
-    # regions define functionality avaliable through all page objects
+    """ Regions define functionality available through all page objects """
     @property
     def search(self):
         # similar to page object. SearchRegion represents search box
         # displayed on all application pages. So adding to each page
         # object is sharing this from the BasePage class.
-        
-        from search import SearchRegion
+        from .search import SearchRegion
         return SearchRegion(self.driver)
+
 
 class InvalidPageException(Exception):
     """InvalidPageException
         Throw this exception when correct page not found.
     """
     pass
-
