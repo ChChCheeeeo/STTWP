@@ -14,6 +14,9 @@ class HomePage(BasePage):
         super(HomePage, self).__init__(driver)
 
     def _validate_page(self, driver):
+        # validate whether home page loaded in browser using
+        # element used to display slideshow on home page.
+
         try:
             driver.find_element_by_class_name(
                 self._home_page_slideshow_locator
