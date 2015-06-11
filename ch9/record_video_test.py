@@ -21,8 +21,9 @@ class SearchProductTest(unittest.TestCase):
 
         self.driver.get("http://demo.magentocommerce.com/")
 
-    # def tearDown(self):
-    #     self.driver.quit()
+     def tearDown(self):
+         self.driver.quit()
+         self.screenCapture.stop()
 
     def test_search_by_category(self):
         search_field = self.driver.find_element_by_name("q")
