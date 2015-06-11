@@ -44,7 +44,7 @@ class ExecuteJavaScriptTest(unittest.TestCase):
         self.driver.execute_script(
             "arguments[0].setAttribute('style', arguments[1]);",
             element,
-            "color: green; border: 2px solid green;"
+            "color: blue; border: 5px solid red;"
         )
         self.driver.execute_script(
             "arguments[0].setAttribute('style', arguments[1]);",
